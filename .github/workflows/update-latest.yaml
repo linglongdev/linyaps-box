@@ -1,0 +1,33 @@
+name: Update latest
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 2 * * *"
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          git remote add openatom https://github.com/OpenAtom-Linyaps/linyaps-box
+          git fetch openatom --no-tags
+          git remote add deepin https://github.com/deepin-community/linyaps-box
+          git fetch deepin --no-tags
+          git reset --hard openatom/master
+          git checkout deepin/master debian
+          git checkout deepin/master rpm
+          rm -rf .github || true
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          branch: obs_latest
+          create_branch: true
+          push_options: --force
+          commit_message: Automated Change
+      - run: |
+          rm -r debian/patches || true
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          branch: obs_latest_nopatch
+          create_branch: true
+          push_options: --force
+          commit_message: Automated Change
