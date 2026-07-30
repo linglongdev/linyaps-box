@@ -18,7 +18,7 @@ jobs:
       - run: |
           git remote add upstream https://github.com/deepin-community/linyaps-box
           git fetch upstream --no-tags
-          git reset --hard upstream/${{ steps.detect_branch.outputs.target_branch }}
+          git reset --hard upstream/release/${{ steps.detect_branch.outputs.target_branch }}
           rm -r .github || true
 
       - uses: stefanzweifel/git-auto-commit-action@v7
