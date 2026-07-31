@@ -11,7 +11,7 @@ jobs:
       - run: |
           git remote add upstream https://github.com/OpenAtom-Linyaps/linyaps-box
           git remote add deepin https://github.com/deepin-community/linyaps-box
-          git fetch --all
+          git fetch --all --no-tags
           git reset --hard upstream/master
           git checkout deepin/master debian
           git checkout deepin/master rpm
