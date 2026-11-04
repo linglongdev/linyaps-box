@@ -1,0 +1,38 @@
+name: Update release
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * 6"
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Get latest release branch
+        id: detect_branch
+        run: |
+          TARGET_BRANCH=$(git ls-remote --heads https://github.com/deepin-community/linyaps-box | grep 'release/[0-9]\.' | awk -F'/' '{print $NF}' | sort -V | tail -n 1)
+          echo "target_branch=${TARGET_BRANCH}" >> $GITHUB_OUTPUT
+
+      - run: |
+          git remote add upstream https://github.com/deepin-community/linyaps-box
+          git fetch upstream --no-tags
+          git reset --hard upstream/release/${{ steps.detect_branch.outputs.target_branch }}
+          rm -r .github || true
+
+      - uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          branch: obs_release_deepin
+          create_branch: true
+          push_options: --force
+          commit_message: Automated Change
+
+      - run: |
+          rm -r debian/patches || true
+      - uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          branch: obs_release
+          create_branch: true
+          push_options: --force
+          commit_message: Automated Change
