@@ -36,6 +36,10 @@ rpm 和 debian 目录来自 https://github.com/deepin-community/linyaps-box mast
 
 代码来自 https://github.com/deepin-community/linyaps-box 最新的 release/xx 分支，删除 patches 目录
 
+deepin-community 删除的三方库（external 下的 fmt、CLI11、nlohmann_json 等）从 https://github.com/OpenAtom-Linyaps/linyaps-box 对应的 release/xx 分支恢复
+
 ### obs_release_deepin
 
 代码来自 https://github.com/deepin-community/linyaps-box 最新的 release/xx 分支
+
+deepin-community 删除的三方库（external 下的 fmt、CLI11、nlohmann_json 等）从 https://github.com/OpenAtom-Linyaps/linyaps-box 对应的 release/xx 分支恢复
